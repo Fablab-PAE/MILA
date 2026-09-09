@@ -10,7 +10,7 @@ Le Projet **Mila** est une initiative de l'organisme [Place à l'emploi](https:/
 
 L'activation vocale et l'uniformité de la séquence d'allumages sont des fonctionnalités en cours de développement. (2026-09-08)
 
-## Tables des matières
+## Table des matières
 
 - [Architecture générale](./contents/01-architecture_generale.md)
 - [Matériels](./contents/02-materiels.md)
@@ -18,7 +18,7 @@ L'activation vocale et l'uniformité de la séquence d'allumages sont des foncti
 - [Contrôle des servomoteurs ESP32 + Python](./contents/04-controle_servomoteurs.md)
 - [Inférence & suivi de visage](./contents/05-inference_suivi_visage.md)
 - [Compilation OpenCV avec GStreamer (nvargus)](./contents/06-compilation_opencv_gstreamer.md)
-- [Système de wake word la voix](./contents/07-systeme_wake_word.md)
+- [Système de wake word (voix)](./contents/07-systeme_wake_word.md)
 - [Séquence sonore de réveil](./contents/08-sequence_sonore_reveil.md)
 - [Yeux animés écrans LCD GC9A01](./contents/09-yeux_animes.md)
 - [Mécanique et modèle 3D](./contents/10-mecanique_modele3d.md)

@@ -16,4 +16,4 @@ L'activation vocale et l'uniformité de la séquence d'allumages sont des foncti
 
 ## Image du projet
 
-<img src="./assets/design_v1.png" alt="Alt text" width="300">
+<img src="./assets/design_v1.png" alt="Image de mila" width="300">

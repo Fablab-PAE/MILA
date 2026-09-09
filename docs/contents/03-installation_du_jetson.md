@@ -32,11 +32,11 @@ Flash réalisé avec le **NVIDIA SDK Manager** depuis un hôte Ubuntu (VM VMware
 
 | Composant | Commande | Version cible |
 | ----------- | ---------- | --------------- |
-| JetPack / L4T | `dpkg -l && grep nvidia-l4t-core` | 36.3 (arm64/aarch64) |
+| JetPack / L4T | `dpkg -l \| grep nvidia-l4t-core` | 36.3 (arm64/aarch64) |
 | Ubuntu | `lsb_release -a` | 22.04.4 LTS |
 | Python pip | `sudo apt install python3-pip` | — |
 | OpenCV | `python3 -c "import cv2; print(cv2.__version__)"` | 4.8.0 |
-| GStreamer (OpenCV) | `python3 -c "import cv2; print(cv2.getBuildInformation())" && grep GStreamer` | YES (1.20.3) |
+| GStreamer (OpenCV) | `python3 -c "import cv2; print(cv2.getBuildInformation())" \| grep GStreamer` | YES (1.20.3) |
 | CUDA | `nvcc --version` | 12.2.140 |
 | TensorRT | `dpkg -l && grep nvinfer` | 8.6.2 |
 | GPU | `nvidia-smi` | — |
