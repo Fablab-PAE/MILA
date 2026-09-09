@@ -116,7 +116,7 @@ Flash réalisé avec le **NVIDIA SDK Manager** depuis un hôte Ubuntu (VM VMware
 
 | Composant | Commande | Version cible |
 | ----------- | ---------- | --------------- |
-| JetPack / L4T | `dpkg -l | grep nvidia-l4t-core` | 36.3 (arm64/aarch64) |
+| JetPack / L4T | `dpkg -l && grep nvidia-l4t-core` | 36.3 (arm64/aarch64) |
 | Ubuntu | `lsb_release -a` | 22.04.4 LTS |
 | Python pip | `sudo apt install python3-pip` | — |
 | OpenCV | `python3 -c "import cv2; print(cv2.__version__)"` | 4.8.0 |
@@ -574,8 +574,6 @@ python wake_word_v3.py --access_key "<PICOVOICE_ACCESS_KEY>" \
 
 - [ ] **Micro spatial** : remplacer le micro simple par un ReSpeaker USB Mic Array.
 - [ ] **Alternative matérielle** : tester RPi + Coral Dual Edge TPU avec un modele local pour la voix
-
-## 12. Feuille de route (TODO)
 
 ### Must-have — Refonte du support PAN/TILT
 
