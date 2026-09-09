@@ -69,7 +69,7 @@ volontairement basse pour la stabilité thermique.
 ssh <username>@<jetson-ip>
 cd Desktop/ultralytics
 source /home/<username>/myenv/bin/activate
-python3 python3 2_Automated_servo_control_no_display_v2.py        # avec mouvements servomoteurs
+python3 2_Automated_servo_control_no_display_v2.py        # avec mouvements servomoteurs
 sudo jtop                                   # suivi ressources CPU/GPU
 ```
 

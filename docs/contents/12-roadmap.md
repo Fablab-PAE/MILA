@@ -34,7 +34,7 @@
 ### Améliorations du matériel
 
 - [ ] **Micro spatial** : remplacer le micro simple par un ReSpeaker USB Mic Array.
-- [ ] **Alternative matérielle** : tester RPi + Coral Dual Edge TPU avec un modele local pour la voix
+- [ ] **Alternative matérielle** : tester RPi + Coral Dual Edge TPU avec un modèle local pour la voix
 
 ## Retour à la table des matières
 
