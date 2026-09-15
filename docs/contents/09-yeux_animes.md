@@ -15,4 +15,4 @@ sudo python eye_animation_test.py     # 24 FPS pour plus de fluidité
 
 ## Retour à la table des matières
 
-[Home](../home.md)
+[Table des matières](../home.md)

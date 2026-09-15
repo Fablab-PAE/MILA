@@ -130,4 +130,4 @@ tail -f /var/log/wake-word.log            # logs temps réel
 
 ## Retour à la table des matières
 
-[Home](../home.md)
+[Table des matières](../home.md)

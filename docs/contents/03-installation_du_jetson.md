@@ -43,4 +43,4 @@ Flash réalisé avec le **NVIDIA SDK Manager** depuis un hôte Ubuntu (VM VMware
 
 ## Retour à la table des matières
 
-[Home](../home.md)
+[Table des matières](../home.md)

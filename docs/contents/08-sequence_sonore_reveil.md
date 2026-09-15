@@ -16,4 +16,4 @@ structure qu'au §7.4 en pointant vers `wake_word_v7.py` avec l'option `--volume
 
 ## Retour à la table des matières
 
-[Home](../home.md)
+[Table des matières](../home.md)

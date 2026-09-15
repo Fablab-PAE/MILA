@@ -10,7 +10,7 @@ L'activation vocale et l'uniformité de la séquence d'allumages sont des foncti
 
 ## Documentation
 
-[Lien vers la documentation du projet](./docs/home.md)
+[Table de la documentation du projet](./docs/home.md)
 
 <!-- ![Image de mila](./assets/design_v1.png) -->
 
