@@ -53,4 +53,4 @@
 
 ## Retour à la table des matières
 
-[Home](../home.md)
+[Table des matières](../home.md)

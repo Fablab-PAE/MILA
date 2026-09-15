@@ -16,4 +16,4 @@ Imprimé en TPU pour stabiliser la tête, absorber son poids et protéger la bas
 
 ## Retour à la table des matières
 
-[Home](../home.md)
+[Table des matières](../home.md)

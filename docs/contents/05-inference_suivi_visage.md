@@ -75,4 +75,4 @@ sudo jtop                                   # suivi ressources CPU/GPU
 
 ## Retour à la table des matières
 
-[Home](../home.md)
+[Table des matières](../home.md)

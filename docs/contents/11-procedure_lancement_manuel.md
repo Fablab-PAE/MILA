@@ -19,4 +19,4 @@ python wake_word_v3.py --access_key "<PICOVOICE_ACCESS_KEY>" \
 
 ## Retour à la table des matières
 
-[Home](../home.md)
+[Table des matières](../home.md)

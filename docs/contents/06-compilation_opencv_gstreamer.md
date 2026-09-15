@@ -31,4 +31,4 @@ Vérification : `python3 -c "import cv2; print(cv2.getBuildInformation())" | gre
 
 ## Retour à la table des matières
 
-[Home](../home.md)
+[Table des matières](../home.md)
