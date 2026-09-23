@@ -33,8 +33,9 @@
 ## Besoins -> Must-have
 
 - [x] Inclure la séquence de démarrage actuel dans la doc.
-- [ ] Modifier la séquence de démarrage en fonction de l'infrastructure actuel avec un seul script à partir du Raspberry pi.
-- [ ] Interface Utilisateur UI pour démarrer Mila et obtenir des métriques, simplifier le débogage et les test, interagir avec l'utilisateur.
+- [ ] Modifier la séquence de démarrage actuel avec un seul script à partir du Raspberry pi.
+- [ ] Intégrer un Serveur ExpressJS dans le Raspberry PI.
+- [ ] Interface web pour démarrer et stopper Mila.
 - [ ] Incorporer les scripts dans le repo
 - [ ] Planification du déploiement ~~(CI~~/CD)
   - Git pull main tout simplement
