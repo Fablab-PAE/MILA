@@ -13,6 +13,7 @@
 ### Connectez-vous au Raspberry Pi avec SSH, démarer Mila et déconnection du Raspberry Pi
 
 ```bash
+# Commande pour activer Mila
 ssh <username>@<raspberryPi4B address> mosquitto_pub -h <Jetson address> -t mila/control -m start_main_script
 # Entrer le mot de passe du Raspberry PI
 ```
@@ -20,6 +21,7 @@ ssh <username>@<raspberryPi4B address> mosquitto_pub -h <Jetson address> -t mila
 ### Reconnectez-vous au Raspberry Pi avec SSH, arrêter Mila et deconnectez-vous du Raspberry Pi
 
 ```bash
+# Commande pour désactiver Mila
 ssh <username>@<raspberryPi4B adress> mosquitto_pub -h <Jetson address> -t mila/control -m stop_main_script
 # Entrer le mot de passe
 ```
