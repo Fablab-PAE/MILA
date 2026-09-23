@@ -33,12 +33,12 @@
 ## Besoins -> Must-have
 
 - [ ] Inclure la séquence de démarrage actuel dans la doc.
+- [ ] Modifier la séquence de démarrage en fonction de l'infrastructure actuel du repo avec un seul script à partir du Raspberry pi.
+- [ ] Interface Utilisateur UI pour démarrer Mila et obtenir des métriques, simplifier le débogage et les test, interagir avec l'utilisateur.
 - [ ] Incorporer les scripts dans le repo
-- [ ] Modifier la séquence de démarrage en fonction de l'infrastructure du repo avec un script central à partir du Raspberry pi
 - [ ] Planification du déploiement ~~(CI~~/CD)
   - Git pull main tout simplement
 - [ ] tester l'infrastructure de démarrage
-- [ ] Interface Utilisateur UI pour démarrer Mila et obtenir des métriques, simplifier le débogage et les test, interagir avec l'utilisateur.
 - [ ] Infrastructure et architecture viable, scalable et maintenable.
     1. Environnement en production dépourvu d'information sensible (Git)
     2. Canal de communication fiable
