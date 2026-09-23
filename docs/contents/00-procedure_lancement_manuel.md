@@ -13,19 +13,15 @@
 ### Connectez-vous au Raspberry Pi avec SSH, démarer Mila et déconnection du Raspberry Pi
 
 ```bash
-ssh <username>@<raspberryPi4B adress>
-# Entrer le mot de passe
-mosquitto_pub -h <Jetson adress> -t mila/control -m start_main_script
-exit
+ssh <username>@<raspberryPi4B address> mosquitto_pub -h <Jetson address> -t mila/control -m start_main_script
+# Entrer le mot de passe du Raspberry PI
 ```
 
 ### Reconnectez-vous au Raspberry Pi avec SSH, arrêter Mila et deconnectez-vous du Raspberry Pi
 
 ```bash
-ssh <username>@<raspberryPi4B adress>
+ssh <username>@<raspberryPi4B adress> mosquitto_pub -h <Jetson address> -t mila/control -m stop_main_script
 # Entrer le mot de passe
-mosquitto_pub -h <Jetson adress> -t mila/control -m stop_main_script
-exit
 ```
 
 ## 0.2 Procédure de démarage avec la voix (non fonctionnel)
