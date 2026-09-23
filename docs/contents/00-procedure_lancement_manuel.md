@@ -1,6 +1,15 @@
-# 0 Procédure de lancement manuel
+# Procédure de lancement manuel
 
-## 0.1 Procédure de démarage de base (sans voix)
+## Procédure de démarrage avec un navigateur internet
+
+Ouvrir un navigateur internet connecté sur le même réseau que le Raspberry PI.
+
+- **Démarrer MILA**
+  - entrer l'adresse suivante dans le navigateur `http://<Raspberry IP>:3000/mila/start`
+- **Arrêter MILA**
+  - entrer l'adresse suivante dans le navigateur `http://<Raspberry IP>:3000/mila/stop`
+
+## Procédure de démarrage de base (sans voix via SSH)
 
 1. Brancher l'alimentation du Jetson (cable avec ruban **ROUGE**).
 2. Brancher le cable d'alimentation (cable avec ruban **VERT**).
@@ -10,7 +19,7 @@
     - Linux -> Bash
     - Mac -> Zsh
 
-### Connectez-vous au Raspberry Pi avec SSH, démarer Mila et déconnection du Raspberry Pi
+### Connectez-vous au Raspberry Pi avec SSH, démarrer Mila et déconnection du Raspberry Pi
 
 ```bash
 # Commande pour activer Mila
@@ -26,7 +35,7 @@ ssh <username>@<raspberryPi4B adress> mosquitto_pub -h <Jetson address> -t mila/
 # Entrer le mot de passe
 ```
 
-## 0.2 Procédure de démarage avec la voix (non fonctionnel)
+## Procédure de démarage avec la voix (non fonctionnel)
 
 - Cette séquence de démarage fonctionnait jusqu'à ce que le logiciel ne soit plus gratuit.
 
