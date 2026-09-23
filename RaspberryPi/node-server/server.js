@@ -12,10 +12,9 @@ app.use((req, res, next) => {
     next();
 });
 
-// route for handling requests from the Angular client
+// route for hello word
 app.get('/api/message', (req, res) => {
-    res.json({ message: 
-            'Hello GEEKS FOR GEEKS Folks from the Express server!' });
+    res.send("HELLO WORLD !!!!");
 });
 
 app.listen(3000, () => {
