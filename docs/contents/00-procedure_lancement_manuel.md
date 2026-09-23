@@ -9,7 +9,7 @@ Ouvrir un navigateur internet connecté sur le même réseau que le Raspberry PI
 - **Arrêter MILA**
   - entrer l'adresse suivante dans le navigateur `http://<Raspberry IP>:3000/mila/stop`
 
-## Procédure de démarrage de base (sans voix via SSH)
+## Procédure de démarrage de base avec SSH
 
 1. Brancher l'alimentation du Jetson (cable avec ruban **ROUGE**).
 2. Brancher le cable d'alimentation (cable avec ruban **VERT**).
