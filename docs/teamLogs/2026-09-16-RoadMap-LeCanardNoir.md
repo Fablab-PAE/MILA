@@ -35,10 +35,18 @@
 - [x] Inclure la séquence de démarrage actuel dans la doc.
 - [x] Modifier la séquence de démarrage actuel avec un seul script à partir du Raspberry pi.
 - [x] Intégrer un Serveur ExpressJS dans le Raspberry PI.
-- [ ] Interface web pour démarrer et stopper Mila.
+- [x] Enpoint démarrer et stopper Mila.
+- [ ] Ajout de service server ExpressJS au démarrage du système
+- [ ] Interface web UI simple pour démarrer et stopper Mila.
+- [ ] Sécuriser minimalement l'environnement (garder une simplicité pour la pédagogie du projet)
+  - [ ] SSh restreindre au réseau local seulement 10.1.1\/24
+  - [ ] Firewall port 80, 443, 22
+  - [ ] Express
+    - [ ] communication POST uniquement
+    - [ ] session un seul user/password
+    - [ ] token JWT ou de session simple
 - [ ] Incorporer les scripts dans le repo
-- [ ] Planification du déploiement ~~(CI~~/CD)
-  - Git pull main tout simplement
+- [ ] Planification du déploiement (CI/CD)
 - [ ] tester l'infrastructure de démarrage
 - [ ] Infrastructure et architecture viable, scalable et maintenable.
     1. Environnement en production dépourvu d'information sensible (Git)

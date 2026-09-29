@@ -1,4 +1,6 @@
-# 3 Installation du Jetson (JetPack 6)
+# 3 Installation
+
+## 3.1 Jetson (JetPack 6)
 
 Flash réalisé avec le **NVIDIA SDK Manager** depuis un hôte Ubuntu (VM VMware).
 
@@ -28,7 +30,7 @@ Flash réalisé avec le **NVIDIA SDK Manager** depuis un hôte Ubuntu (VM VMware
    sudo apt-get install nvidia-jetpack
    ```
 
-## Vérification de l'environnement
+### 3.1.1 Vérification de l'environnement Jetson
 
 | Composant | Commande | Version cible |
 | ----------- | ---------- | --------------- |
@@ -40,6 +42,42 @@ Flash réalisé avec le **NVIDIA SDK Manager** depuis un hôte Ubuntu (VM VMware
 | CUDA | `nvcc --version` | 12.2.140 |
 | TensorRT | `dpkg -l && grep nvinfer` | 8.6.2 |
 | GPU | `nvidia-smi` | — |
+
+## 3.2 Installation Raspberry Pi
+
+### 3.2.1 Installer le projet à partir du dépôt Github
+
+1. Installer NodeJS, npm et git
+
+````bash
+sudo apt update && sudo apt install nodejs npm git -y;
+```
+
+2. Cloner le projet MILA héberger chez Github
+
+```bash
+cd ~
+git clone https://github.com/Fablab-PAE/MILA.git
+```
+
+3. Installer le projet
+
+```bash
+npm i ~/MILA/RaspberryPi/node-server/ &&\
+sudo cp ~/MILA/RaspberryPi/server-mila.service /etc/systemd/system/
+sudo systemctl start server-mila.service
+```
+
+4. Mettre le projet MILA à jour
+
+```bash
+cd ~/MILA &&\
+git checkout main &&\
+git pull &&\
+npm i ~/MILA/RaspberryPi/node-server/ &&\
+sudo cp ~/MILA/RaspberryPi/server-mila.service /etc/systemd/system/server-mila.service &&\
+sudo systemctl restart server-mila.service
+```
 
 ## Retour à la table des matières
 
