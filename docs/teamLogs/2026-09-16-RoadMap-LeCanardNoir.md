@@ -30,7 +30,7 @@
 - [x] Formation sommaire sur le kanban
 - [x] Formation sommaire sur Github
 
-## Besoins -> Must-have
+## TODO
 
 - [x] Inclure la séquence de démarrage actuel dans la doc.
 - [x] Modifier la séquence de démarrage actuel avec un seul script à partir du Raspberry pi.
