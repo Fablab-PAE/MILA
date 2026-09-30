@@ -75,6 +75,7 @@ npm i ~/MILA/RaspberryPi/node-server/ &&\
 sudo systemctl link ~/MILA/RaspberryPi/services/server-mila.service &&\
 sudo mkdir -p /etc/systemd/system/server-mila.service.d &&\
 sudo nano /etc/systemd/system/server-mila.service.d/myenv.conf &&\
+mkdir -p /home/root-pae/MILA/RaspberryPi/node-server/logs &&\
 sudo systemctl daemon-reload &&\
 sudo systemctl enable --now server-mila
 ```
