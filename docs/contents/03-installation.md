@@ -40,7 +40,7 @@ sudo apt-get install nvidia-jetpack
 | OpenCV | `python3 -c "import cv2; print(cv2.__version__)"` | 4.8.0 |
 | GStreamer (OpenCV) | `python3 -c "import cv2; print(cv2.getBuildInformation())" \| grep GStreamer` | YES (1.20.3) |
 | CUDA | `nvcc --version` | 12.2.140 |
-| TensorRT | `dpkg -l && grep nvinfer` | 8.6.2 |
+| TensorRT | `dpkg -l \| grep nvinfer` | 8.6.2 |
 | GPU | `nvidia-smi` | — |
 
 ## 3.2 Installation Raspberry Pi
@@ -50,7 +50,7 @@ sudo apt-get install nvidia-jetpack
 1. Installer NodeJS, npm et git
 
 ```bash
-sudo apt update && sudo apt install nodejs npm git -y;
+sudo apt update && sudo apt install nodejs npm git mosquitto-clients -y;
 ```
 
 2. Cloner le projet MILA héberger chez Github
@@ -71,11 +71,11 @@ git clone https://github.com/Fablab-PAE/MILA.git
 >- project parent directory : le chemin vers le dossier parent au projet
 
 ```bash
-npm i ~/MILA/RaspberryPi/node-server/ &&\
+npm --prefix ~/MILA/RaspberryPi/node-server install &&\
 sudo systemctl link ~/MILA/RaspberryPi/services/server-mila.service &&\
 sudo mkdir -p /etc/systemd/system/server-mila.service.d &&\
 sudo nano /etc/systemd/system/server-mila.service.d/myenv.conf &&\
-mkdir -p /home/root-pae/MILA/RaspberryPi/node-server/logs &&\
+mkdir -p ~/MILA/RaspberryPi/node-server/logs &&\
 sudo systemctl daemon-reload &&\
 sudo systemctl enable --now server-mila
 ```
@@ -86,9 +86,9 @@ sudo systemctl enable --now server-mila
 cd ~/MILA &&\
 git checkout main &&\
 git pull &&\
-npm i ~/MILA/RaspberryPi/node-server/ &&\
+npm --prefix ~/MILA/RaspberryPi/node-server install &&\
 sudo systemctl daemon-reload &&\
-sudo systemctl enable --now server-mila
+sudo systemctl restart server-mila
 ```
 
 5. Verification du service server-mila.service

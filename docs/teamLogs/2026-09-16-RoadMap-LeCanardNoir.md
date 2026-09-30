@@ -35,8 +35,8 @@
 - [x] Inclure la séquence de démarrage actuel dans la doc.
 - [x] Modifier la séquence de démarrage actuel avec un seul script à partir du Raspberry pi.
 - [x] Intégrer un Serveur ExpressJS dans le Raspberry PI.
-- [x] Enpoint démarrer et stopper Mila.
-- [ ] Ajout de service server ExpressJS au démarrage du système
+- [x] Endpoint pour démarrer et stopper Mila.
+- [x] Ajout du service du serveur ExpressJS au démarrage du système
 - [ ] Interface web UI simple pour démarrer et stopper Mila.
 - [ ] Sécuriser minimalement l'environnement (garder une simplicité pour la pédagogie du projet)
   - [ ] SSh restreindre au réseau local seulement 10.1.1\/24
