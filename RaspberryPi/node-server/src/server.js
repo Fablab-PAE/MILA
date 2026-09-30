@@ -4,7 +4,7 @@ const { util } = require('util');
 // Transforme exec en version basée sur les Promesses
 const exec = require('util').promisify(require('child_process').exec);
 const dotenv = require('dotenv');
-dotenv.config({ path: './.env' });
+dotenv.config({ path: '../.env' });
 
 
 const app = express();

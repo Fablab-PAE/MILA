@@ -31,7 +31,7 @@ ssh <username>@<raspberryPi4B address> mosquitto_pub -h <Jetson address> -t mila
 
 ```bash
 # Commande pour désactiver Mila
-ssh <username>@<raspberryPi4B adress> mosquitto_pub -h <Jetson address> -t mila/control -m stop_main_script
+ssh <username>@<raspberryPi4B address> mosquitto_pub -h <Jetson address> -t mila/control -m stop_main_script
 # Entrer le mot de passe
 ```
 

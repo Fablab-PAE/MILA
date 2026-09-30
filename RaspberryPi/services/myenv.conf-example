@@ -4,6 +4,6 @@ Group=<groupname>
 WorkingDirectory=
 WorkingDirectory=<project parent directory>/MILA/RaspberryPi/node-server
 ExecStart=
-ExecStart=/usr/bin/node <project parent directory>/MILA/RaspberryPi/node-server/server.js
+ExecStart=/usr/bin/node <project parent directory>/MILA/RaspberryPi/node-server/src/server.js
 EnvironmentFile=<project parent directory>/MILA/RaspberryPi/node-server/.env
 ReadWritePaths=<project parent directory>/MILA/RaspberryPi/node-server/logs
