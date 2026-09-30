@@ -1,0 +1,6 @@
+- supprimer toutes traces du fichier RPI_STRUCTURE.md en raison d'informations sensibles, présent seulement dans le dépôt Git du projet.
+  - ~/MILA/node_modules
+  - ~/MILA/package.json
+  - ~/MILA/pakage-lock.json
+  - ~/MILA/RaspberryPi/RPI_STRUCTURE.md
+- supprimer toutes traces du fichier server-mila.service dans la branche lecanardnoir/service-express-server et les commits.
