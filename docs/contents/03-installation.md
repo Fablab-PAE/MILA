@@ -72,7 +72,7 @@ git clone https://github.com/Fablab-PAE/MILA.git
 
 ```bash
 npm i ~/MILA/RaspberryPi/node-server/ &&\
-sudo systemctl link ~/MILA/RaspberryPi/node-server/server-mila.service &&\
+sudo systemctl link ~/MILA/RaspberryPi/services/server-mila.service &&\
 sudo mkdir -p /etc/systemd/system/server-mila.service.d &&\
 sudo nano /etc/systemd/system/server-mila.service.d/myenv.conf &&\
 sudo systemctl daemon-reload &&\
