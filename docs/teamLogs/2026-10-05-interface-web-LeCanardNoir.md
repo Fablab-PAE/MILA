@@ -1,0 +1,3 @@
+- Suggesion de d'inclure les participants Robotic au projet Mila dans un brainstorming sur les fonctionnalités désirés pour l'interfaces web.
+- [ ] implémenter une connexion unique avec un seul token
+- [ ] créer une interface Angular simple sans CSS pour activer et déactiver Mila
