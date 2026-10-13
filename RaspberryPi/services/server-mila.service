@@ -1,0 +1,31 @@
+[Unit]
+Description=Serveur ExpressJS pour MILA
+After=network.target
+StartLimitIntervalSec=60
+StartLimitBurst=3
+
+[Service]
+User=mila
+Group=mila
+WorkingDirectory=/opt/mila/node-server
+ExecStart=/usr/bin/node /opt/mila/node-server/server.js
+
+Restart=on-failure
+RestartSec=5
+
+# EnvironmentFile est défini dans le drop-in local (myenv.conf)
+
+MemoryMax=512M
+
+# Durcissement
+NoNewPrivileges=yes
+ProtectSystem=strict
+ProtectHome=read-only
+PrivateTmp=yes
+
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=server-mila
+
+[Install]
+WantedBy=multi-user.target

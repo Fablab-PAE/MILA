@@ -3,7 +3,7 @@
 - [Procédure de lancement manuel](./contents/00-procedure_lancement_manuel.md)
 - [Architecture générale](./contents/01-architecture_generale.md)
 - [Matériels](./contents/02-materiels.md)
-- [Installation du Jetson JetPack 6](./contents/03-installation_du_jetson.md)
+- [Installation du Jetson JetPack 6](./contents/03-installation.md)
 - [Contrôle des servomoteurs ESP32 + Python](./contents/04-controle_servomoteurs.md)
 - [Inférence & suivi de visage](./contents/05-inference_suivi_visage.md)
 - [Compilation OpenCV avec GStreamer (nvargus)](./contents/06-compilation_opencv_gstreamer.md)

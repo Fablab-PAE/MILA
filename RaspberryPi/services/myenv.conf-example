@@ -1,0 +1,9 @@
+[Service]
+User=<username>
+Group=<groupname>
+WorkingDirectory=
+WorkingDirectory=<project parent directory>/MILA/RaspberryPi/node-server
+ExecStart=
+ExecStart=/usr/bin/node <project parent directory>/MILA/RaspberryPi/node-server/server.js
+EnvironmentFile=<project parent directory>/MILA/RaspberryPi/node-server/.env
+ReadWritePaths=<project parent directory>/MILA/RaspberryPi/node-server/logs
