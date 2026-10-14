@@ -9,13 +9,30 @@ dotenv.config({ path: './.env' });
 
 const app = express();
 const JETSON_IP_HOST = process.env.JETSON_IP_HOST;
+const RASPBERRY_PI_HOST = process.env.RASPBERRY_PI_HOST;
 
 // handling CORS
+const allowedOrigins = [
+    'http://localhost:4200',
+    `http://${RASPBERRY_PI_HOST}:4200`,
+];
+
 app.use((req, res, next) => {
-    res.header("Access-Control-Allow-Origin", 
-               "http://localhost:4200");
-    res.header("Access-Control-Allow-Headers", 
+    const origin = req.headers.origin;
+
+    if (allowedOrigins.includes(origin)) {
+        res.header("Access-Control-Allow-Origin", origin);
+        res.header("Vary", "Origin");
+    }
+    res.header("Access-Control-Allow-Headers",
                "Origin, X-Requested-With, Content-Type, Accept");
+    res.header("Access-Control-Allow-Methods",
+               "GET, POST, PUT, DELETE, OPTIONS");
+
+    // Réponse à la requête de vérification préalable du navigateur
+    if (req.method === "OPTIONS") {
+        return res.sendStatus(204);
+    }
     next();
 });
 
