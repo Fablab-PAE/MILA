@@ -50,14 +50,26 @@ sudo apt-get install nvidia-jetpack
 1. Installer NodeJS, npm et git
 
 ```bash
-sudo apt update && sudo apt install nodejs npm git mosquitto-clients -y;
+sudo apt update && sudo apt install git mosquitto-clients -y;
+# Download and install nvm:
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.8/install.sh | bash
+
+# in lieu of restarting the shell
+\. "$HOME/.nvm/nvm.sh"
+
+# Download and install Node.js:
+nvm install 26
+
+# Verify the Node.js and npm version:
+node -v && npm -v
 ```
 
 2. Cloner le projet MILA héberger chez Github
 
 ```bash
 cd ~
-git clone https://github.com/Fablab-PAE/MILA.git
+git clone https://github.com/Fablab-PAE/MILA.git &&\
+cd MILA
 ```
 
 3. Installer le projet
@@ -70,25 +82,40 @@ git clone https://github.com/Fablab-PAE/MILA.git
 >- groupname : le groupe dans lequel le username est rattaché
 >- project parent directory : le chemin vers le dossier parent au projet
 
+**BACK-END SERVEUR ExpressJS, s'assurer que vous êtes dans le dossier du projet <parent path>/MILA/**
+
 ```bash
-npm --prefix ~/MILA/RaspberryPi/node-server install &&\
-sudo systemctl link ~/MILA/RaspberryPi/services/server-mila.service &&\
+cd RaspberryPi &&\
+npm --prefix node-server/ install &&\
+sudo systemctl link services/server-mila.service &&\
 sudo mkdir -p /etc/systemd/system/server-mila.service.d &&\
 sudo nano /etc/systemd/system/server-mila.service.d/myenv.conf &&\
-mkdir -p ~/MILA/RaspberryPi/node-server/logs &&\
+mkdir -p node-server/logs &&\
 sudo systemctl daemon-reload &&\
-sudo systemctl enable --now server-mila
+sudo systemctl enable --now server-mila &&\
+cd ..
+```
+
+**FRONT-END ANGULAR, s'assurer que vous êtes dans le dossier du projet <parent path>/MILA/**
+```bash
+cd RaspberryPi/node-server/front-end &&\
+npm install &&\
+ng build
 ```
 
 4. Mettre le projet MILA à jour
 
+**S'assurer que vous êtes dans le dossier du projet <parent path>/MILA/**
+
 ```bash
-cd ~/MILA &&\
 git checkout main &&\
 git pull &&\
-npm --prefix ~/MILA/RaspberryPi/node-server install &&\
+npm --prefix RaspberryPi/node-server install &&\
 sudo systemctl daemon-reload &&\
-sudo systemctl restart server-mila
+sudo systemctl restart server-mila &&\
+cd RaspberryPi/node-server/front-end &&\
+npm install &&\
+ng build
 ```
 
 5. Verification du service server-mila.service
