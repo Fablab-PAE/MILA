@@ -17,6 +17,8 @@ const allowedOrigins = [
     `http://${RASPBERRY_PI_HOST}:4200`,
 ];
 
+app.use(express.static("front-end/dist/node-client/browser"));
+
 app.use((req, res, next) => {
     const origin = req.headers.origin;
 
@@ -37,8 +39,8 @@ app.use((req, res, next) => {
 });
 
 // route for hello word
-app.get('/api/message', (req, res) => {
-    res.send("HELLO WORLD !!!!");
+app.get('/', (req, res) => {
+    res.sendFile("front-end/dist/node-client/browser/index.html", { root: __dirname });
 });
 
 app.get('/api/message', (req, res) => {
