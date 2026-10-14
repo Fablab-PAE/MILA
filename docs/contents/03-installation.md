@@ -50,18 +50,20 @@ sudo apt-get install nvidia-jetpack
 1. Installer NodeJS, npm et git
 
 ```bash
-sudo apt update && sudo apt install git mosquitto-clients -y;
-# Download and install nvm:
+sudo apt update && sudo apt install nodejs git mosquitto-clients -y;
+# Télécharger nvm pour obtenir la dernière version de nodeJS sinon Angular ne fonctionne pas.
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.8/install.sh | bash
 
-# in lieu of restarting the shell
+# redémarre le shell
 \. "$HOME/.nvm/nvm.sh"
 
-# Download and install Node.js:
-nvm install 26
+# installer Node.js:
+nvm install node
 
-# Verify the Node.js and npm version:
+# Verifier version:
 node -v && npm -v
+
+sudo ln -sfn "$(nvm which default)" /opt/mila/node
 ```
 
 2. Cloner le projet MILA héberger chez Github
