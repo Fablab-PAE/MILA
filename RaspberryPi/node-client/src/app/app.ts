@@ -1,6 +1,7 @@
 import { Component, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { RouterOutlet } from '@angular/router';
+import { environment } from './../environments/environment';
 
 @Component({
   selector: 'app-root',
@@ -14,7 +15,7 @@ export class App {
   protected readonly status = signal('Mila is OFF');
 
   startMila() {
-    this.http.get('http://localhost:3000/mila/start').subscribe({
+    this.http.get(`http://${environment.raspberryPiHost}:3000/mila/start`).subscribe({
       next: (response) => {
         console.log('Mila started successfully', response);
         this.status.set('Mila is ON');
@@ -27,14 +28,14 @@ export class App {
   }
 
   stopMila() {
-    this.http.get('http://localhost:3000/mila/stop').subscribe({
+    this.http.get(`http://${environment.raspberryPiHost}:3000/mila/stop`).subscribe({
       next: (response) => {
         console.log('Mila stopped successfully', response);
         this.status.set('Mila is OFF');
       },
       error: (error) => {
         console.error('Error stopping Mila', error);
-        this.status.set('Error stoping Mila');
+        this.status.set('Error stopping Mila');
       },
     });
   }

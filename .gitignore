@@ -314,3 +314,5 @@ pyrightconfig.json
 
 
 **.env
+**/environment.development.ts
+**/environment.ts
