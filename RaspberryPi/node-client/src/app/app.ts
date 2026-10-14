@@ -1,7 +1,7 @@
 import { Component, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { RouterOutlet } from '@angular/router';
-import { environment } from './../environments/environment';
+import { environment } from '../environments/environment';
 
 @Component({
   selector: 'app-root',
