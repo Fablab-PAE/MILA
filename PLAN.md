@@ -4,6 +4,54 @@ Ce plan est destiné à être exécuté par un humain, avec un agent comme guide
 
 > Les adresses, noms d'utilisateur et mots de passe sont toujours des variables (`<Jetson address>`, etc.). Ne les écrivez jamais dans ce fichier ni dans le dépôt.
 
+## 0. Mode d'emploi pour l'agent guide
+
+Le **participant** écrit et exécute le code. L'**agent** guide : il explique, relit, pose des questions et propose des corrections, sans réaliser les phases à la place du participant (sauf demande explicite).
+
+Au début de chaque session :
+
+1. Lire ce fichier en entier, puis [.github/copilot-instructions.md](./.github/copilot-instructions.md) (commandes, architecture, conventions).
+2. Lire la section « Suivi d'avancement » ci-dessous pour savoir où reprendre. Si elle est vide, commencer à la Phase 0.
+3. Vérifier la branche Git courante : le travail se fait dans une branche dédiée, jamais sur `main`.
+
+Pour chaque phase :
+
+1. Résumer l'objectif en deux phrases et demander au participant ce qu'il prévoit de faire avant de lui donner des pistes.
+2. Laisser le participant coder, puis relire son code en regard des cases à cocher de la phase.
+3. Faire exécuter les commandes de la section **Validation** et lire avec lui les résultats. Une phase n'est terminée que si tout est observé, pas supposé.
+4. Cocher les cases, noter les mesures réelles dans le suivi, puis proposer un commit (un par phase).
+
+Où s'exécute quoi :
+
+| Lieu | Ce qui s'y fait |
+| ---- | --------------- |
+| Poste de développement | Édition du dépôt, front-end Angular (`npm test`, `npm run build`) |
+| Jetson (SSH) | Recopie manuelle de `Jetson/*.py` (voir en-têtes des scripts), exécution du handler et du script principal, broker MQTT |
+| Raspberry Pi (SSH) | Serveur Express (service `server-mila`), tests `curl` |
+
+Règles :
+
+- Toujours demander la confirmation du participant avant une commande qui modifie le Jetson ou le Raspberry Pi.
+- Ne jamais mettre d'adresse IP, de nom d'utilisateur ou de mot de passe dans un fichier du dépôt.
+- Si une validation échoue, déboguer avec `mosquitto_sub -h <Jetson address> -t mila/# -v` avant de changer le code.
+- Si le contrat de la section 3 doit changer, le modifier ici d'abord, puis adapter le code.
+
+## Suivi d'avancement
+
+À mettre à jour par le participant avec l'agent, à la fin de chaque phase.
+
+| Phase | Statut | Commit | Mesures et notes (délais réels, problèmes rencontrés) |
+| ----- | ------ | ------ | ------------------------------------------------------ |
+| 0 | à faire | | |
+| 1 | à faire | | |
+| 2 | à faire | | |
+| 3 | à faire | | |
+| 4 | à faire | | |
+| 5a | à faire | | |
+| 5b | à faire | | |
+| 6 | à faire | | |
+| 7 | à faire | | |
+
 ## 1. Objectif et besoins
 
 Le Jetson publie son état. Le Raspberry Pi le relaie jusqu'au front-end Angular.
@@ -100,6 +148,8 @@ Fichier : [Jetson/mqtt-handler.py](./Jetson/mqtt-handler.py)
 - [ ] Dans `on_connect`, publier `true` (retained) sur `mila/status/online`, en plus de la souscription actuelle.
 - [ ] Lors d'un arrêt propre (bloc `finally`), publier `false` avant `disconnect`.
 - [ ] Dans la Phase 1, remplacer le keepalive actuel de 60 s par **2 s** dans `client.connect(...)`.
+- [ ] Vérifier la version de `paho-mqtt` sur le Jetson (`pip show paho-mqtt`). Avec la version 2.x, `mqtt.Client()` sans argument échoue : il faut `mqtt.Client(mqtt.CallbackAPIVersion.VERSION1)` (ou adapter la signature des callbacks). Le code actuel suppose la version 1.x.
+- [ ] Avec `loop_forever()`, la publication depuis un autre thread est permise, mais le Last Will doit être défini (`will_set`) **avant** `connect`.
 
 **Validation en ligne de commande** (depuis n'importe quelle machine du réseau) :
 
@@ -203,6 +253,7 @@ Fichier : [RaspberryPi/node-server/server.js](./RaspberryPi/node-server/server.j
 }
 ```
 
+- [ ] Pièges de fraîcheur : (1) les messages *retained* livrés à la connexion d'Express ont l'air récents alors qu'ils peuvent dater d'avant une panne : ne mettre à jour l'heure de réception que pour les messages **non retained** (`packet.retain === false`) ; (2) ne jamais comparer le `ts` du Jetson à l'horloge du Raspberry Pi (sans Internet, les deux horloges peuvent dériver) : mesurer l'âge avec l'heure locale de réception.
 - [ ] Obsolescence : `online: false` si l'état a plus de **3 s**, si `online` vaut `false`, ou si Express n'est pas connecté au broker. Dans ce cas, `running: false`, `can_start: false` et `reason: "Jetson hors ligne"` (valeurs déduites, pas conservées de l'ancien état).
 - [ ] Ne pas modifier `/mila/start` ni `/mila/stop` (publication avec `mosquitto_pub` conservée).
 
