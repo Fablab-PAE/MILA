@@ -39,7 +39,7 @@
 - [x] Ajout du service du serveur ExpressJS au démarrage du système
 - [ ] Interface web UI simple pour démarrer et stopper Mila.
 - [ ] Sécuriser minimalement l'environnement (garder une simplicité pour la pédagogie du projet)
-  - [ ] SSh restreindre au réseau local seulement 10.1.1\/24
+  - [ ] SSh restreindre au réseau local seulement <réseau local>/24
   - [ ] Firewall port 80, 443, 22
   - [ ] Express
     - [ ] communication POST uniquement
