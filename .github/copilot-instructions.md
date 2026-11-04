@@ -1,14 +1,8 @@
 # Instructions pour le dépôt Mila
 
-## Architecture
-
-- Mila est réparti sur trois cartes matérielles : le Jetson gère la capture vidéo, le suivi des visages, la logique de commande des servomoteurs et le broker MQTT ; l’ESP32-S3 commande les servomoteurs ; le Raspberry Pi gère la voix, l’audio et les yeux animés. Consultez `docs/contents/01-architecture_generale.md` et `docs/home.md` pour l’architecture matérielle et les procédures d’utilisation. Les répertoires de code du Jetson et de l’ESP32-S3 sont des espaces réservés dans ce dépôt ; ne supposez pas que leur code d’exécution y est implémenté.
-- L’interface Web du Raspberry Pi se trouve dans `RaspberryPi/node-server/front-end` (Angular) et son API/serveur dans `RaspberryPi/node-server` (Express en CommonJS). Express sert les fichiers Angular compilés depuis `front-end/dist/node-client/browser`. Les routes `/mila/start` et `/mila/stop` publient des messages MQTT de commande vers le Jetson avec `mosquitto_pub`.
-- L’application Angular lit l’adresse du Raspberry Pi dans sa configuration d’environnement et appelle ces routes Express. Le serveur lit `JETSON_IP_HOST` et `RASPBERRY_PI_HOST` depuis `RaspberryPi/node-server/.env`. Le service systemd et le modèle de fichier d’environnement local se trouvent dans `RaspberryPi/services`.
-
 ## Compilation, tests et exécution
 
-Exécutez les commandes du frontend depuis `RaspberryPi/node-server/front-end` :
+Les commandes Angular s’exécutent depuis `RaspberryPi/node-server/front-end` :
 
 ```sh
 npm start
@@ -18,21 +12,27 @@ npm test -- --include src/app/app.spec.ts
 npm test -- --filter="should render title"
 ```
 
-L’option `--include` lance un fichier de tests ; `--filter` sélectionne les tests dont le nom de suite ou de test correspond au motif. Angular CLI utilise Vitest.
+Angular CLI utilise Vitest. `--include` limite l’exécution à un fichier de test et `--filter` sélectionne les tests dont le nom correspond au motif. Aucun script lint n’est configuré.
 
-Avant de compiler ou de lancer les tests, créez les fichiers de configuration locaux ignorés par Git à partir des modèles :
+Avant le build ou les tests, créez les fichiers locaux ignorés par Git à partir des exemples :
 
-- Copiez `src/environments/environment-example.ts` vers `src/environments/environment.ts`.
-- Copiez `src/environments/environment.development-example.ts` vers `src/environments/environment.development.ts`.
-- Dans chaque fichier, définissez `raspberryPiHost` avec l’adresse du Raspberry Pi.
+- `src/environments/environment-example.ts` → `src/environments/environment.ts`
+- `src/environments/environment.development-example.ts` → `src/environments/environment.development.ts`
 
-La configuration de développement Angular remplace `environment.ts` par `environment.development.ts`; ces deux fichiers sont ignorés par Git. Le serveur a également besoin du fichier `RaspberryPi/node-server/.env`, ignoré par Git, contenant `JETSON_IP_HOST` et `RASPBERRY_PI_HOST`.
+Définissez `raspberryPiHost` dans les deux fichiers. La configuration de développement remplace `environment.ts` par `environment.development.ts`.
 
-Lancez le serveur Express depuis `RaspberryPi/node-server` avec `npm start` (port 3000). Le script `npm test` de ce répertoire est un espace réservé qui se termine avec une erreur ; aucune commande de test ou de lint n’est configurée pour le backend.
+Le serveur Express s’exécute depuis `RaspberryPi/node-server` avec `npm start` (port 3000). Il requiert un `.env` local contenant `JETSON_IP_HOST` et `RASPBERRY_PI_HOST`. Son script `npm test` est un espace réservé qui échoue ; aucun test ou lint backend n’est configuré.
 
-## Conventions de code et limites des composants
+## Architecture
 
-- La racine Angular est un composant autonome (`src/app/app.ts`), configuré avec les fournisseurs de `src/app/app.config.ts`. Utilisez `HttpClient` d’Angular pour les appels à l’API et les signaux pour l’état simple du composant ; les adresses propres à chaque environnement doivent rester dans `src/environments/`.
-- Préservez la séparation entre le Web et l’API : le frontend appelle `/mila/start` et `/mila/stop`, et Express les traduit en commandes MQTT. Le contrôle matériel et la vision sont décrits dans la documentation, mais ne sont pas implémentés dans l’application Angular.
-- Le service Express utilise des modules CommonJS et sert la version de production du bundle Angular. Si vous modifiez la configuration de compilation Angular, conservez le chemin de sortie attendu par le middleware de fichiers statiques.
-- Consultez `docs/contents/00-procedure_lancement_manuel.md` pour le fonctionnement des commandes de démarrage et d’arrêt, et `docs/contents/03-installation.md` pour le déploiement sur Raspberry Pi et la configuration systemd.
+- Mila répartit ses responsabilités sur trois cartes : le Jetson assure la capture vidéo, le suivi du visage, la commande des servomoteurs et le broker MQTT ; l’ESP32-S3 génère le PWM des servomoteurs à partir des commandes série ; le Raspberry Pi gère la voix, l’audio et les yeux animés.
+- Les scripts Python de `Jetson/` mettent en œuvre le suivi caméra/TensorRT et l’écoute des commandes MQTT. Le contrôle envoie des commandes série `PAN:<angle>` et `TILT:<angle>` à l’ESP32. Les descriptions détaillées du flux matériel et du déploiement sont dans `docs/contents/01-architecture_generale.md`, `docs/contents/04-controle_servomoteurs.md` et `docs/contents/05-inference_suivi_visage.md`.
+- L’interface Web Angular est dans `RaspberryPi/node-server/front-end`; l’API est dans `RaspberryPi/node-server`, en Express/CommonJS. Angular appelle `/mila/start` et `/mila/stop`; Express lance `mosquitto_pub` vers `JETSON_IP_HOST`, sur le topic `mila/control`, avec les messages `start_main_script` et `stop_main_script`.
+- Express sert le bundle Angular depuis `front-end/dist/node-client/browser`. Le service systemd et son exemple de configuration locale sont dans `RaspberryPi/services`. Voir `docs/contents/00-procedure_lancement_manuel.md` pour le démarrage/arrêt et `docs/contents/03-installation.md` pour le déploiement.
+
+## Conventions et limites des composants
+
+- L’application Angular utilise un composant racine autonome (`src/app/app.ts`) et les fournisseurs de `src/app/app.config.ts`. Utilisez `HttpClient` pour l’API et les signaux pour l’état simple du composant ; gardez les adresses propres à l’environnement dans `src/environments/`.
+- Préservez la séparation frontend/API : le frontend appelle les routes HTTP, et seul le serveur traduit ces appels en commandes MQTT. Le contrôle matériel ne doit pas être déplacé dans l’application Angular.
+- Le serveur Node utilise CommonJS et charge `.env` depuis son répertoire de travail. Préservez les noms `JETSON_IP_HOST` et `RASPBERRY_PI_HOST`, ainsi que les origines CORS nécessaires au frontend local et au Raspberry Pi.
+- Lors d’un changement à la compilation Angular, conservez le répertoire de sortie `front-end/dist/node-client/browser`, attendu par le middleware de fichiers statiques Express.
