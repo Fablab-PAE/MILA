@@ -128,6 +128,103 @@ systemd-analyze verify /etc/systemd/system/server-mila.service
 systemctl status server-mila
 ```
 
+## 3.3 Liaison Ethernet directe Raspberry Pi ↔ Jetson
+
+Le Raspberry Pi et le Jetson communiquent (MQTT) par un câble Ethernet branché directement entre les deux cartes, sans routeur ni Wi-Fi. Chaque carte reçoit une adresse IP fixe, dans un même réseau (`<réseau Ethernet>`) qui ne doit pas être le même que celui du Wi-Fi.
+
+| Carte | Interface | Adresse IP |
+| ------ | ----------- | ------------ |
+| Raspberry Pi | `eth0` | `<Raspberry Ethernet address>` |
+| Jetson | `eth0` | `<Jetson address>` |
+
+> **Exemple de configuration (à titre indicatif seulement)**
+>
+> | Carte | Adresse IP d'exemple |
+> | ------ | ---------------------- |
+> | Raspberry Pi | `192.168.50.1/24` |
+> | Jetson | `192.168.50.2/24` |
+>
+> Le réseau `192.168.50.x` n'est qu'un **exemple** : vous pouvez en choisir un autre. Ce qui est important :
+>
+> - Les deux cartes doivent avoir les **trois premiers nombres identiques** (ici `192.168.50`) et être dans un réseau **différent** de celui du Wi-Fi.
+> - Le **dernier nombre doit être différent** sur chaque carte : `.1` pour le Raspberry Pi et `.2` pour le Jetson.
+>
+> Remplacez `<Raspberry Ethernet address>` et `<Jetson address>` dans les commandes ci-dessous par vos adresses.
+Le profil `mila-eth` ne définit **aucune passerelle** (`ipv4.never-default yes`) : il ne modifie pas la route par défaut ni le Wi-Fi, qui reste utilisable pour l'accès SSH et Internet.
+
+### 3.3.1 Créer le profil réseau (sur chaque carte)
+
+**Raspberry Pi :**
+
+```bash
+sudo nmcli connection modify "Wired connection 1" connection.autoconnect no  # seulement si ce profil existe
+sudo nmcli connection add type ethernet ifname eth0 con-name mila-eth \
+  ipv4.method manual ipv4.addresses <Raspberry Ethernet address>/24 ipv4.never-default yes \
+  ipv6.method disabled connection.autoconnect yes connection.autoconnect-priority 100 \
+  ethtool.pause-autoneg no ethtool.pause-rx no ethtool.pause-tx no \
+&& sudo nmcli connection up mila-eth
+```
+
+**Jetson :**
+
+```bash
+sudo nmcli connection add type ethernet ifname eth0 con-name mila-eth \
+  ipv4.method manual ipv4.addresses <Jetson address>/24 ipv4.never-default yes \
+  ipv6.method disabled connection.autoconnect yes connection.autoconnect-priority 100 \
+  ethtool.pause-autoneg no ethtool.pause-rx no ethtool.pause-tx no \
+&& sudo nmcli connection up mila-eth
+```
+
+> **⚠️ IMPORTANT!**
+>
+> - Le contrôle de flux (`pause`) doit rester désactivé : avec lui actif, le lien perdait 60 à 65 % des paquets sans aucune erreur affichée.
+> - N'utilisez pas `ip addr flush dev eth0` : cela retire l'adresse IP de l'interface.
+
+### 3.3.2 Indiquer l'adresse du Jetson au serveur
+
+Dans `RaspberryPi/node-server/.env` (sur le Raspberry Pi) :
+
+```bash
+JETSON_IP_HOST=<Jetson address>
+```
+
+```bash
+sudo systemctl restart server-mila
+```
+
+### 3.3.3 Vérifier la liaison
+
+Sur les deux cartes :
+
+```bash
+nmcli -t -f NAME,DEVICE connection show --active   # mila-eth doit être actif sur eth0
+ip -br -4 addr show eth0                           # <adresse>/24
+ip route                                           # la route par défaut ne doit passer que par wlan0
+ethtool -a eth0                                    # RX et TX : off
+```
+
+Depuis le Raspberry Pi :
+
+```bash
+ping -c 20 <Jetson address>                            # 0 % de perte attendu
+ip route get <Jetson address>                          # doit afficher dev eth0
+```
+
+Test MQTT. Sur le Jetson :
+
+```bash
+mosquitto_sub -h <Jetson address> -t mila/control -v
+```
+
+Depuis le Raspberry Pi :
+
+```bash
+mosquitto_pub -h <Jetson address> -t mila/control -m test_ethernet
+curl -i http://localhost:3000/mila/stop            # 200 attendu, puis stop_main_script reçu sur le Jetson
+```
+
+Le broker Mosquitto du Jetson doit écouter sur toutes les interfaces : `sudo ss -ltnp | grep 1883` doit afficher `0.0.0.0:1883`.
+
 ## Retour à la table des matières
 
 [Table des matières](../home.md)

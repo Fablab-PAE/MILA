@@ -13,7 +13,7 @@ Ouvrir un navigateur internet connecté sur le même réseau que le Raspberry PI
 
 1. Brancher l'alimentation du Jetson (cable avec ruban **ROUGE**).
 2. Brancher le cable d'alimentation (cable avec ruban **VERT**).
-3. Les deux périphériques (Jetson et Raspberry Pi) sont connectés sur le même réseau wifi, vous devez vous connecter au même réseau (wifi ou Ethernet) avec votre ordinateur (PC). Demander au responsable pour savoir sur quel réseau vous connecter.
+3. Brancher le câble Ethernet entre le Raspberry Pi et le Jetson : c'est par ce câble que les deux cartes communiquent (voir [3.3 Liaison Ethernet directe](./03-installation.md)). Pour vous connecter en SSH, votre ordinateur (PC) doit être sur le même réseau wifi que le Raspberry Pi. Demander au responsable pour savoir sur quel réseau vous connecter.
 4. Ouvrir un terminal
     - Windows -> PowerShell
     - Linux -> Bash
