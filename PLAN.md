@@ -1,12 +1,12 @@
 # Plan : retour d'état du Jetson en temps réel
 
-Ce plan est destiné à être exécuté par un humain, avec un agent comme guide. Chaque phase est petite, testable en ligne de commande, et se termine par un point de validation. Ne passez à la phase suivante que lorsque la validation de la phase courante est réussie.
+Ce plan est destiné à être exécuté par un participant humain, avec un agent qui propose l'implémentation et répond à ses questions. Chaque phase est petite, testable en ligne de commande, et se termine par un point de validation. Ne passez à la phase suivante que lorsque la validation de la phase courante est réussie.
 
 > Les adresses, noms d'utilisateur et mots de passe sont toujours des variables (`<Jetson address>`, etc.). Ne les écrivez jamais dans ce fichier ni dans le dépôt.
 
-## 0. Mode d'emploi pour l'agent guide
+## 0. Mode d'emploi pour l'agent
 
-Le **participant** écrit et exécute le code. L'**agent** guide : il explique, relit, pose des questions et propose des corrections, sans réaliser les phases à la place du participant (sauf demande explicite).
+L'**agent propose l'implémentation** de chaque phase : il rédige le code (modifications dans le dépôt) et donne une **très courte explication** de ses choix (quelques phrases). Le participant posera des questions au besoin ; l'agent n'ajoute pas de détails non demandés. Le **participant** décide : il relit, pose ses questions, accepte ou refuse, puis exécute lui-même les commandes de validation et fait les opérations sur le Jetson et le Raspberry Pi. L'agent répond à toutes les questions, aussi souvent que nécessaire, en expliquant le « pourquoi » (MQTT, Last Will, retained, SSE, etc.) à un niveau adapté à un débutant, mais seulement quand le participant le demande.
 
 Au début de chaque session :
 
@@ -16,29 +16,32 @@ Au début de chaque session :
 
 Pour chaque phase :
 
-1. Résumer l'objectif en deux phrases et demander au participant ce qu'il prévoit de faire avant de lui donner des pistes.
-2. Laisser le participant coder, puis relire son code en regard des cases à cocher de la phase.
-3. Faire exécuter les commandes de la section **Validation** et lire avec lui les résultats. Une phase n'est terminée que si tout est observé, pas supposé.
-4. Cocher les cases, noter les mesures réelles dans le suivi, puis proposer un commit (un par phase).
+1. Résumer l'objectif en deux ou trois phrases, puis présenter la proposition d'implémentation (fichiers touchés, changements, très courte explication des choix) **avant** de modifier quoi que ce soit.
+2. Attendre l'accord du participant et répondre à ses questions. Ajuster la proposition selon ses remarques.
+3. Une fois l'accord obtenu, appliquer les changements dans le dépôt, en restant dans le périmètre de la phase, puis résumer en une ou deux phrases ce qui a été fait.
+4. Indiquer au participant les commandes de la section **Validation** (poste, Jetson ou Raspberry Pi), le laisser les exécuter et analyser avec lui les résultats. Une phase n'est terminée que si tout est observé, pas supposé.
+5. Si une validation échoue, diagnostiquer avec lui et corriger. Ne pas passer à la suite.
+6. Cocher les cases, noter les mesures réelles dans le suivi, puis proposer un commit (un par phase).
 
 Où s'exécute quoi :
 
 | Lieu | Ce qui s'y fait |
 | ---- | --------------- |
-| Poste de développement | Édition du dépôt, front-end Angular (`npm test`, `npm run build`) |
-| Jetson (SSH) | Recopie manuelle de `Jetson/*.py` (voir en-têtes des scripts), exécution du handler et du script principal, broker MQTT |
+| Poste de développement | Édition du dépôt par l'agent, front-end Angular (`npm test`, `npm run build`) |
+| Jetson (SSH) | Recopie manuelle de `Jetson/*.py` par le participant (voir en-têtes des scripts), exécution du handler et du script principal, broker MQTT |
 | Raspberry Pi (SSH) | Serveur Express (service `server-mila`), tests `curl` |
 
 Règles :
 
-- Toujours demander la confirmation du participant avant une commande qui modifie le Jetson ou le Raspberry Pi.
+- L'agent ne se connecte jamais lui-même au Jetson ni au Raspberry Pi : il fournit les commandes, le participant les exécute et rapporte les résultats.
+- L'agent n'avance pas à la phase suivante sans l'accord du participant.
 - Ne jamais mettre d'adresse IP, de nom d'utilisateur ou de mot de passe dans un fichier du dépôt.
 - Si une validation échoue, déboguer avec `mosquitto_sub -h <Jetson address> -t mila/# -v` avant de changer le code.
 - Si le contrat de la section 3 doit changer, le modifier ici d'abord, puis adapter le code.
 
 ## Suivi d'avancement
 
-À mettre à jour par le participant avec l'agent, à la fin de chaque phase.
+À mettre à jour à la fin de chaque phase, par l'agent après confirmation du participant.
 
 | Phase | Statut | Commit | Mesures et notes (délais réels, problèmes rencontrés) |
 | ----- | ------ | ------ | ------------------------------------------------------ |
