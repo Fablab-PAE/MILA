@@ -141,8 +141,8 @@ Le Raspberry Pi et le Jetson communiquent (MQTT) par un câble Ethernet branché
 >
 > | Carte | Adresse IP d'exemple |
 > | ------ | ---------------------- |
-> | Raspberry Pi | `192.168.50.1/24` |
-> | Jetson | `192.168.50.2/24` |
+> | Raspberry Pi | `192.168.50.1` |
+> | Jetson | `192.168.50.2` |
 >
 > Le réseau `192.168.50.x` n'est qu'un **exemple** : vous pouvez en choisir un autre. Ce qui est important :
 >
